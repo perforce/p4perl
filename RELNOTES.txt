@@ -1,0 +1,776 @@
+                            Release Notes for
+                 P4Perl, Perforce's script API for Perl
+
+                             Version 2019.1
+
+Introduction
+
+	This document lists all user-visible changes to P4Perl
+	from release 2007.3, the first supported P4Perl release.
+
+	Perforce numbers releases YYYY.R/CCCCC, e.g. 2002.1/30547.
+	YYYY is the year; R is the release of that year; CCCCC is the
+	bug fix change level. Each bug fix in these release notes is
+	marked by its change number. Any build includes (1) all bug fixes
+	of all previous releases and (2) all bug fixes of the current
+	release up to the bug fix change level.
+
+	To determine the version of your P4Perl, issue the following
+	command:
+		perl -MP4 -e "print P4::Identify()"
+
+--------------------------------------------------------------------------
+
+Installing P4Perl
+
+	Windows users can download an installer containing pre-built
+	packages for P4Perl from the Perforce FTP site at
+	ftp://ftp.perforce.com/perforce for version 2019.1 for Strawberry Perl
+	5.30.  Users on other platforms (including ActiveState Perl) must build
+	from source, as detailed below.
+
+--------------------------------------------------------------------------
+
+Building P4Perl from Source 
+
+	1. Download the Perforce C++ API from the Perforce FTP site at
+	   "ftp://ftp.perforce.com/perforce". The API archive is located in
+	   release and platform-specific subdirectories and is named "p4api.zip"
+	   for Windows and "p4api.tgz" for non-Windows platforms.
+	   
+	   For Windows platforms using Strawberry Perl you will need to use the
+	   MinGW builds of the P4API under the bin.mingw* directories.  Older
+	   versions of ActiveState Perl used Visual Studio, so under the bin.ntx*
+	   directories you will need "p4api_vs2008_static.zip" or similar.
+	   
+	   Mac OS X users should get the API from either the "bin.darwin90x86" or 
+	   "bin.darwin90x86_64" platform directory.
+	   
+	   Note: 32-bit builds of P4Perl require a 32-bit version of the
+	         C++ API and a 32-bit version of Perl. 64-bit builds of
+	         P4Perl require a 64-bit version of the C++ API and a 
+	         64-bit version of Perl.
+
+	2. Unzip the archive into an empty directory.
+
+	3. Extract the P4Perl API archive into an empty directory.
+	
+	4. Locate the SSL libraries for your Perl install, for example Strawberry 
+	   Perl's location is 'C:\Strawberry\c\lib\' (libcrypto.a and libssl.a).
+
+	5. To build P4Perl, run the following commands:
+
+	   On Unix/Mac platforms:
+       
+	   perl Makefile.PL --apidir=<absolute path to Perforce C++ API> \
+	                    --ssl=<absolute path to SSL libraries>
+	   make
+
+
+	   On Windows platforms (with Strawberry Perl built with MinGW):
+	   
+	   perl Makefile.PL --apidir=<absolute path to Perforce C++ API> \
+	                    --ssl=<absolute path to SSL libraries>
+	   gmake
+	   
+	   
+	   On Windows platforms (with Perl built with Visual Studio):
+       
+	   perl Makefile.PL --apidir=<absolute path to Perforce C++ API> \
+	                    --ssl=<absolute path to SSL libraries>
+	   nmake
+       
+       
+	   On Windows platforms (with ActiveState Perl built with MinGW):
+
+	   ppm install MinGW
+	   ppm install dmake
+	   perl Makefile.PL -make=dmake \
+	                    --apidir=<absolute path to Perforce C++ API> \
+	                    --ssl=<absolute path to SSL libraries>
+	   dmake
+	   dmake install
+
+	   Note: to reinstall cleanly P4Perl, remove the directory created
+	         in step 2, then re-extract the archive.
+	
+	6. To test your P4Perl build, run the following command:
+
+	   <make> test 
+	   
+	   (where <make> is the appropriate make for your platform)
+	   
+	   Note: on certain Windows platforms and versions of Perl,
+	         the manifest file is not automatically applied to P4.dll,
+	         so it must be done manually. This is known to happen
+	         on 32-bit Perl 5.8.x and 64-bit Perl 5.8.9.
+	         Tests failing with "Can't load ... P4.dll" are a symptom
+	         of this. The two commands to run are:
+
+	         mt -nologo -manifest blib\arch\auto\P4\P4.dll.manifest \
+	            -outputresource:blib\arch\auto\P4\P4.dll;2
+
+	         del blib\arch\auto\P4\P4.dll.manifest
+
+	   Note: the test harness requires the Perforce server executable
+	         p4d and Perforce command line executable p4 to be
+	         installed and in the PATH. 
+
+	5. To install P4Perl, run the following command:
+
+	   <make> install
+	   
+	   (where <make> is the appropriate make for your platform)
+
+	   Note: on Unix/Mac platforms, the installation must be performed 
+	         as the root user
+	         
+	SSL support
+	-----------
+	
+	Perforce Server 2012.1 and later supports SSL connections and the
+	C++ API has been compiled with this support. For applications that
+	do not require SSL support the C++ API provides a stub library
+	(libp4sslstub.*) to satisfy the linker requirements.
+	
+	P4Perl will build with the stub library by default. To enable
+	SSL support, provide the switch --ssl [librarypath] to the build.
+	Without [librarypath] the linker will use the default ssl libraries 
+	provided by the operating system. If a library path is provided,
+	the linker will be instructed to look there first.
+
+
+--------------------------------------------------------------------------
+
+Compatibility Statements
+
+	Server Compatibility
+
+    P4Perl 2019.1 officially supports Helix Core Server 2019.1. 
+	  
+
+	API Compatibility
+
+	  The 2019.1 release of P4Perl supports the 2019.1 Perforce API.
+	  Older releases of the Perforce API may work but are no longer
+	  supported.
+
+	Perl Compatibility
+
+	  The 2019.1 release of P4Perl is supported building from source with 
+	  Perl 5.28 and versions back to 5.14  
+
+	  The P4Perl 32-bit Windows installer requires Perl 5.28 32-bit.
+	  The P4Perl 64-bit Windows installer requires Perl 5.28 64-bit.
+
+	  The installer is bundled with the p4 version that addresses
+	  the heartbleed CVE-2014-0160 vulnerability in OpenSSL by	  
+	  linking in version 1.0.1g of the library.
+
+	OpenSSL Compatibility
+
+	  To build P4Perl with encrypted communication support, you must
+	  use the version of OpenSSL that Perforce C/C++ API has been
+	  built against. Running P4Perl linked to an older library will 
+	  fail with the error:
+	
+	    "SSL library must be at least version 1.0.1."
+
+	  The 2016.1 release of P4Perl is supported with OpenSSL 1.0.1.
+
+	  For detailed compatibility, please check the following table:
+
+		Perforce C/C++ API Version | OpenSSL Release
+		============================================
+		     2012.1                | 	1.0.0
+		     2012.2 - 2014.2       | 	1.0.1g+
+		     2016.1                | 	1.0.1k+
+		     2018.2                |    1.0.2
+		     2019.1                |    1.0.2
+
+	Platform Compatibility
+
+	  While P4Perl is generally portable, this release is certified
+	  only on the following platforms:
+
+	    Linux kernel 2.6+ (glibc 2.12+) for Intel(x86, x86_64)
+	    Windows 8 for Intel(x86, x64)
+	    Windows 8.1 for Intel(x86, x64)
+	    Windows 10 for Intel(x86, x64)
+	    Windows 2008 for Intel(x86, x64)
+	    Windows 2012 for Intel(x64)
+	    Windows 2016 for Intel(x64)
+	    Apple OS X 10.10+ for Intel(x86_64)
+		
+		Note: As of 2012.1, a universal build of the Perforce C/C++ 
+		      API is no longer available for Darwin or Mac OS X.  
+		      P4Perl is now a 64-bit only library on Darwin. This 
+		      has been tested with a universal build of Perl and 
+		      is known to work.
+
+	Compiler Compatibility
+
+	  To build P4Perl from source, you must use a version of Perl that
+	  has been compiled with the same compiler used to build the
+	  Perforce C++ API. For most platforms, use gcc/g++.
+
+	  Attempting to use a different compiler or a different version 
+	  of the compiler can cause linker errors due to differences in
+	  name handling between compilers. 
+
+	  The Windows installer was built with Strawberry Perl 5.28
+
+	Compatibility with Previous Releases
+
+	  P4Perl 2018.2 is backwards-compatible with all previous releases
+	  from Perforce Software.
+
+	Known Limitations
+
+	  The Perforce client-server protocol is not designed to support
+	  multiple concurrent queries over the same connection. For this
+	  reason, multi-threaded applications using the C++ API or the
+	  script APIs (P4Perl, P4Ruby, etc.) should ensure that a
+	  separate connection is used for each thread or that only one
+	  thread may use a shared connection at a time.
+
+	Deleted Methods
+	---------------
+	The following methods have been deleted from the P4 class and
+	are no longer available.
+
+	Dropped()	Use IsConnected() 
+	Final()		Use Disconnect()
+	Init()		Use Connect() 
+	IsParseForms()	Form parsing is now always on
+	Login()		Use RunLogin()
+	MergeErrors()	Errors and warnings are now separate
+	ParseForms()	Form parsing is now always on
+	Tag()		Tagged mode is on by default [see Tagged()]
+	
+	New Methods
+	-----------
+	The following methods are new to P4Perl.
+
+	GetApiLevel()		Returns the API compatibility level
+	P4ConfigFile()		Returns the path of the P4CONFIG file
+	IsConnected()		Returns true if the client is connected
+	Debug()			Sets the debug level
+	GetMaxResults()		Returns the current maxresults limit
+	GetMaxScanRows()	Returns the current maxscanrows limit
+	GetMaxLockTime()	Returns the current maxlocktime limit
+	SetMaxLockTime()	Sets the current maxlocktime limit
+	GetProg()		Returns the name of the program (if set)
+	ServerLevel()		Returns the (numeric) level of the server
+	GetTicketFile()		Returns the path to the current ticket file
+	SetTicketFile()		Sets the path to the current ticket file
+	GetVersion()		Returns the version of the script
+	SetVersion()		Sets the version of the script
+	ClearHandler()		Clears the active results handler
+	GetHandler()		Returns the results handler object
+	SetHandler()		Sets the results  handler object
+
+	Renamed Methods
+	---------------
+	In the Public Depot version of P4Perl, unknown methods are assumed
+	to be Perforce command and are executed accordingly. For example,
+	you can issue a "p4 info" command as follows:
+
+		$p4->Info();
+
+	This approach causes problems with keywords like "client," which
+	is both a command and a setting in the client environment
+	(P4CLIENT). To resolve this ambiguity and to make P4Perl
+	consistent with other Perforce scripting interfaces, this
+	convention has been changed. In Perforce P4Perl, methods with
+	names prefixed with "Run" are interpreted as Perforce commands.
+	For example:
+
+		$p4->RunInfo();
+
+	Tagged Mode and Form Parsing
+	----------------------------
+	In the Public Depot version of P4Perl, tagged output and 
+	form parsing mode are off by default but most scripts 
+	turn them on immediately. In Perforce P4Perl, both form 
+	parsing and tagged output are on by default. 
+
+	Form parsing cannot be explicitly disabled, but tagged output may
+	be turned on and off by using the following calls:
+
+		$p4->Tagged( 0 );	# Disabled
+		$p4->Tagged( 1 );	# Enabled
+
+	Because form parsing does not work when tagged output is disabled,
+	this method can be used to disable form parsing.
+
+	Calling Tagged() without a parameter is no longer supported. 
+	Most users can simply delete any old calls to Tagged() 
+	from their scripts. Previously it was not possible to 
+	disable tagged output after enabling it.
+
+--------------------------------------------------------------------------
+
+Key to symbols used in change notes below.
+
+	  * -- requires new P4Perl
+	 ** -- requires P4Perl built with new P4API
+	*** -- requires new p4d server program
+
+--------------------------------------------------------------------------
+
+New functionality in 2019.1
+
+	#1842023
+	  	The 2019.1 release of P4Perl supports the 2019.1 Perforce API.
+		Perl Compatibility: The 2019.1 release of P4Perl is supported 
+		building from source with Perl 5.28 and versions back to 5.14  
+
+New functionality in 2018.2
+
+
+	#1733778 (Bug #90750)
+	  	The 2018.2 release of P4Perl supports the 2018.2 Perforce API.
+		Perl Compatibility: The 2018.2 release of P4Perl is supported 
+		building from source with Perl 5.28 and versions back to 5.14  
+
+
+New functionality in 2016.1
+
+	#1385451 ***
+		Added 'progress' monitoring for DVCS Clone operations. 
+
+	#1385422, #1384893, #1383825 ***
+		Added Init and Clone methods for DVCS support.  Including test case 65-dvcs.
+
+	#1381249 ***
+		Added SetEnvrioFile( file ) and GetEnviroFile()
+
+	#1381228 ***
+  		Added $p4->DefineSpec( type, spec ) to make use of then new %specdef%. 
+  		Includes a new test case 60-define-spec.
+
+
+Bugs fixed in 2016.1
+
+	#1381221 *
+		Missing CMS_EDIT edit case for Resolve.
+
+	#1381218 *
+		Added '&' mapping to the MapMaker output.  This also quells the compiler
+		warning about the missing case: in the two switch statements.  Change to
+		unreleased feature (ditto mappings), to be documented in the release notes.
+		
+	#1381212 (Bug workshop:job000204) ***
+		Reenabled Progress support. Now the server sends a summary of files synced 
+		in quiet mode.
+
+	#1381211 (Bug workshop:job000325) ***
+		Support P4CHARSET=none
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------
+
+New functionality in 2014.1
+
+	#761858 (Bug #59274) *
+		Added the ability for P4Perl to preserve comments in forms.
+
+		Comments are stored as a 'comment' key in the spec hash and
+		are accessible.  For example:
+
+   			my $spec = $p4->ParseGroup( 'my_group' );
+   			print $spec->{'comment'};
+
+
+Bugs fixed in 2014.1
+
+	#806054 (Bug #65251) *
+		FetchXxx() methods were not returning data due to a 
+		missing method: perlclientuser::OutputInfo()
+
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+
+New functionality in 2012.2
+
+	#507841 (Bug #56481) *
+		Added RunTickets() method to list local tickets.
+		Note that $p4->Run("tickets") still gives the old error 
+		message "Must upgrade to 2004.2 p4 to access tickets."
+		
+	#509303 (Bug #56513) * ** ***
+		Support for the new progress indicator API. P4Perl
+		supplies a new progress attribute, which can take an
+		instance of P4::Progress class or subclass. Progress
+		information is currently only supported for submits and
+		'sync -q'. Details can be found in the documentation.
+		(perldoc P4::Progress)
+	
+	#499606 (Bug #56518) *
+		New convenience method P4::IterateSpec that allows
+		easy iteration through some or all spec objects such as 
+		clients or changes.  The P4Perl implementation provides 
+		two methods next() and hasNext().  Details can be found 
+		in the documentation.
+		(perldoc P4::IterateSpec)
+
+Bugs fixed in 2012.2
+
+	#513154 (Bug #59168) *
+		Added abstract class P4::OutputHandler and renamed the methods
+		introduced in 2011.1 to match case consistence used P4Perl.  
+		Change also includes the addition of perldoc for P4::OutputHandler.
+		(perldoc P4::OutputHandler)
+
+		Deprecated Method	New Method
+		----------------------  ----------------------
+		outputMessage() 	OutputMessage() 
+		outputText()		OutputText()
+		outputInfo()		OutputInfo()
+		outputBinary()		OutputBinary()
+		outputStat()		OutputStat()
+
+	#509755 (Bug #58125) *
+		Correction to perldoc for P4::Message and P4 to identify a return
+		type of string when calling $p4->Errors or $p4->Warnings and a 
+		return type of P4::Message object for $p4->Messages.
+
+	#504636 (Bug #57507) **
+		API change to allow P4Perl on Windows to call '$p4->GetEnv()' 
+		after setting 'use P4;' to fetch environment variables. 
+
+	#501503 (Bug #58484) *
+		Added missing 'StreamAtChange' field to cached specs.	
+		
+	#498724 (Bug #58284) *
+		Specs returning results with arrays of hashed elements are now 
+		null padded.  Enabling the alignment of values when indexed into
+		the hash.
+				
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+
+New functionality in 2012.1
+
+	#400839 (Bug #51850) * ** ***
+	    Enable "action resolve" to support resolves of branches, 
+	    deletes and file types. The existing P4::Resolver class has
+	    been extended with a new method ActionResolve() that will be
+	    invoked if an "action resolve" is required.
+	    Details can be found in the documentation.
+	
+	#414329 (Bug #51634) * ** ***
+	    P4Perl supports SSL connections if compiled with SSL support.
+	    Instructions on how to compile with SSL support can be found
+	    at the top of this document under "Building P4Python from
+	    Source" and in the documentation.
+		
+	    P4.identify() will then report the version of the OpenSSL 
+	    library used.
+	    Library used for building the Perforce C++ API (not the
+	    version P4Python is linked against).
+
+Bugs fixed in 2012.1
+
+	#446673 (Bug #54196, #55063) *
+	    Fixed action-resolve test hardness after server change of
+	    the default integration algorithm
+
+	#421813 (Bug #51749) *
+	    Fixed unreferenced scalar reported when attempting to free
+	    P4Results array. 
+
+	#424055 (Bug #51637) *
+	    Minor fix to version string when building distribution.
+	    Separated Makefile version parsing into a new class
+	    Build::Version
+
+	#421820 (Bug #51752) *
+	    When using a UTF16 or UTF32 charset P4Perl would attempt to
+	    format the command output messages in the same format. Fixed
+	    to format client messages in UTF8.  
+		
+	#420702 (Bug #51758) *
+	    Perl would crash with a segmentation fault if a custom
+	    Resolver object was used to resolve binary files. Fixed.
+
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+
+New functionality in 2011.1
+
+	#338403 (Bug #47451) *
+	    Added a SetEnv() method to set P4 environment variables in the 
+	    host's registry (available on Windows and OS X).
+
+	#328168 (Bug #45860) * **
+	    Enabled streams output as the default where the API level is
+	    greater than 69.
+
+	#319432 (Bug #42249) *
+	    Added new callback handler for processing results.
+	    P4::Spec results can now be processed individually using a set
+	    of method callbacks from a user defined object. The user
+	    defined object is set with the new method call SetHandler()
+	    and must implement the following methods:
+		outputMessage()
+		outputText()
+		outputInfo()
+		outputBinary()
+		outputStat()
+		
+Bugs fixed in 2011.1
+
+	#406719 (Bug #43424) *
+	    Running 'print' on a file that started with '---' won't 
+	    output its content as it is interpreted as track output
+	    even if track output is not enabled. This is now fixed.
+	    There is still an oddity when p4.track = 1 and a user runs
+	    p4.run_print() on a file that only has lines starting with
+	    '--- '. In that case, the output of the print is lost. 
+	    Disable tracking by setting p4.track = 0 (the default) will
+	    solve this problem.
+
+	#385159 (Bug #49324) **
+	    On Windows Vista, Windows 7, or Windows 2008, a client running as
+	    Administrator would fail to properly process file names in
+	    non-ASCII character sets (such as Shift-JIS).  
+
+	#328944 (Bug #41272) ***
+	    Find ExtraTag fields such as 'firmerThanParent' and includes
+	    them in the returned hash. Including additional tests
+	    in 16-streams.
+	
+	#328563 (Bug #42097) *
+	    Change order of P4API version string, now formatted as below:
+	   	(2011.1/308885 API)
+
+	#328186 (Bug #42097) *
+	    Updated the reported version strings for P4Perl and P4API.
+
+	#319431 (Bug #43791) **
+	    Bug fix for regression test 11-login.t
+
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+
+New functionality in 2010.2
+
+	#261035 *
+	    Added new track option.
+	    For more details about server performance tracking see:
+	    http://kb.perforce.com/article/883
+	
+	#244195 *
+	    New P4::Messages() method returns an array of P4::Message()
+	    objects, one for each message (info, warning or error) sent
+	    by the server. The methods of this class allow script writers 
+	    to test the severity of the error and the generic reason for 
+	    the error as well as accessing the error message itself. 
+
+Bugs fixed in 2010.2
+
+	#291396 (Bug #43424) *
+	    Running 'print' on a file that started with '---' won't 
+	    output its content as it is interpreted as track output
+	    even if track output is not enabled. This is now fixed.
+	    There is still an oddity when p4.track = 1 and a user runs
+	    p4.run_print() on a file that only has lines starting with
+	    '--- '. In that case, the output of the print is lost. 
+	    Disable tracking by setting p4.track = 0 (the default) will
+	    solve this problem.
+
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+
+New functionality in 2010.1
+	
+	#23152 *
+	    Added new ServerUnicode() method that allows script
+	    writers to test whether or not a Perforce Server is in
+	    internationalized (unicode) mode. 
+
+	#231550 *
+	    It's no longer necessary to execute a command against the
+	    server before calling ServerLevel(), or 
+	    ServerCaseSensitive(). If no command has been run, then
+	    P4Perl will automatically run a 'p4 info' in order to
+	    gather the required information.
+
+	#230105 *
+	    Three new class constants have been added to the P4 class:
+
+		$P4::VERSION	= The P4Perl version string
+		$P4::PATCHLEVEL	= The P4Perl patch level
+		$P4::OS		= The OS name as P4Perl sees it
+
+Bugs fixed in 2010.1
+
+	(none)
+
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+
+New functionality in 2009.2
+
+	#215001 (Bug #35415)
+	    A new method, P4::ServerCaseSensitive(), enables scripts to 
+	    detect whether a server is case-sensitive. Detection can only
+	    be done after a command has been executed on the connection.
+
+	#214996 (Bug #32915)
+	    P4::SetPort() no longer permits the user to change the port
+	    after the client has connected.
+
+Bugs fixed since first release (228098)
+
+	#243114 (Bug 38769#) *
+	    P4Perl no longer crashes when attempting to parse the jobspec.
+
+Bugs fixed in 2009.2
+
+	#215000 (Bug #35411) *
+	    P4Perl now correctly tracks disconnects from the server.
+
+	#222728 (Bug #36569) *
+	    The Map class removed '-' and '+' from the path if the form
+	    Map::Insert(lhs, rhs) was used, even if these characters did
+	    not appear at the beginning of the path. Now dashes and pluses
+	    are preserved within the path.
+
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+
+New functionality in 2009.1
+	
+	#193914 (Bug #26730) *
+	    The P4::Tagged() method now accepts an optional code reference
+	    as well as a boolean, which enables you to run a subroutine
+	    with the tagged status of the session temporarily toggled. For
+	    example:
+
+	    my $GetChangeCounter = sub{ $p4->RunCounter('change')->[ 0 ] };
+	    my $changeno = $p4->Tagged( 0, $GetChangeCounter );
+
+	#191642 *
+	    The P4::Spec class has a new method, PermittedFields, 
+	    which lists the field names that are permitted in specs of
+	    that type. 
+	
+Bugs fixed in 2009.1
+
+	#192044 (Bug #30071) *
+	    P4::RunLogin() now supports all valid arguments to "p4 login".
+
+	#192043 (Bug# 32966) *
+	    P4::RunPassword() can now handle the case when the user has
+	    not previously set a password. For old password, specify an
+	    empty string. For example:
+
+		$p4->RunPassword( $p4->GetPassword(), "newpassword" );
+
+	   work regardless of whether a current password is set.
+
+	#192035 (Bug# 31437) *
+	    P4Perl now builds correctly when the API directory is 
+	    specified using a relative path.
+
+	#191643 (Bug #28646) *
+	    P4Perl now correctly parses jobs when the jobspec contained a
+	    field with a name ending in a number. 
+
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+
+New functionality in 2008.2
+
+	#165187 (Bug #30362) *
+	    A new class, P4::Map, exposes the Perforce mapping logic to
+	    P4Perl users. This class enables script writers
+	    to create and manipulate Perforce mappings within scripts. 
+
+	    The following methods are available in the P4::Map class:
+
+	    Class Methods:
+
+		new()		Constructor
+		Join()		Join two maps returning a third
+
+	    Instance Methods:
+
+		Clear()		Empty a map
+		Count()		Return the number of entries
+		IsEmpty()	Tests whether a map object is empty
+		Insert()	Inserts an entry into the map
+		Includes()	Tests whether a path is mapped
+		Reverse()	Swap left and right sides of the mapping
+		Translate()	Translate a string through a map
+		Lhs()		Returns the left side as an array
+		rhs()		Returns the right side as an array
+		AsArray()	Returns the map as an array
+
+Bugs fixed in 2008.2
+
+	#169807 (Bug #31110) *
+	    P4Perl no longer crashes when RunResolve() is passed a
+	    P4::Resolver object and a file path.
+
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+
+New functionality in 2008.1
+
+	#158238 (Bug #27433) *
+	    P4::RunResolve() now supports interactive resolves through two
+	    new classes: P4::Resolver, and P4::MergeData. P4::Resolver is
+	    a base class intended to be subclassed by users; simply
+	    override the Resolve() method to implement the required merge 
+	    behavior. P4::Resolver::Resolve() is passed a P4::MergeData
+	    object when it is called; this object contains the information
+	    about the names and locations of the files in the merge, and
+	    the hint from Perforce's built-in merge algorithm.
+
+	#152357 (Bug #25063) *
+	    The 'P4::GetEnv( $var )' method has been added to the
+	    P4 class. This instance method enables the caller to
+	    interrogate the Perforce environment, including reading
+	    Perforce variables from P4CONFIG files and, on Windows, the
+	    registry. P4::SetCwd() now loads any P4CONFIG file settings
+	    that are appropriate to the new working directory.
+
+	#151525 *
+	    P4Perl now returns P4::Spec objects from all methods 
+	    that parse Perforce forms. A P4::Spec object is a 
+	    blessed hash reference, so most existing code is 
+	    unaffected. Code that iterates over all members of 
+	    the hash must skip the new '_fields_' member. This 
+	    member variable is used to store a list of field names 
+	    that are valid in forms of that type. This approach 
+	    enables accessor methods for the fields in the form. 
+	    Simply call a method with the name of the field you 
+	    want to get or set prefixed with an underscore (_). 
+	    For example:
+
+		$client->_Root();		# Get client root
+		$client->_Root( $newroot );	# Set client root
+
+	    Updating the hash directly is still supported and is
+	    equivalent to using the method-based interface.
+
+	#158308 (Bug #29309) *
+	    P4Perl now supports Mac OS X 10.5.
+
+Bugs fixed in 2008.1
+
+	#158323 (Bug #29953) *
+	    The P4::GetApiLevel() was missing; it has now been
+	    implemented.
+
+	#150578 (Bug #28760) *
+	    The presence of deleted revisions in a file's history 
+	    might cause the fileSize and digest attributes to be 
+	    incorrect for other revisions in the output of 
+	    P4::RunFilelog(). This problem occurred because a 
+	    digest and file size were allocated to the deleted 
+	    revision. This problem has been corrected.
