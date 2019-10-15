@@ -1,4 +1,5 @@
-[![Jenkins Version](https://img.shields.io/badge/Support-Official-green.svg)](mailto:support@perforce.com)
+[![Support](https://img.shields.io/badge/Support-Official-green.svg)](mailto:support@perforce.com)
+[![Support](https://img.shields.io/badge/Support-Community-orange.svg)](mailto:support@perforce.com)
 
 
 # p4perl
