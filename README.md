@@ -1,6 +1,7 @@
 [![Support](https://img.shields.io/badge/Support-Official-green.svg)](mailto:support@perforce.com)
 
 # p4perl
+## Overview
 P4Perl is a wrapper for the P4 C++ API in Perl.
 
 P4Perl is a Perl module that provides an object-oriented API to Helix Core server. Using P4Perl is faster than using the command-line interface in scripts, because multiple command can be executed on a single connection, and because it returns Helix server responses as Perl hashes and arrays.
