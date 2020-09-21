@@ -1071,9 +1071,14 @@ sub AUTOLOAD {
 				$comment .=  $l . "\n";
 			}
 		}
-		my $spec = $self->ParseSpec( $1, $form );
-		$spec->{'comment'} = $comment;
-		return $spec;
+        my $spec = $self->ParseSpec( $1, $form );
+        # If there is a problem with processing the spec, we will
+        # get undefined returned, need to catch it before we add comments.
+        unless (defined $spec){
+            die("Invalid specification");
+        } 
+        $spec->{'comment'} = $comment;
+        return $spec;
 	}
 	elsif ( $cmd =~ /^format(\w+)/i ) {
 		die("Format$1 requires an argument!") if ( !scalar(@_) );

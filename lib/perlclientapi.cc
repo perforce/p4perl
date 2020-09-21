@@ -558,8 +558,9 @@ void PerlClientApi::RunCmd(const char *cmd, ClientUser *ui, int argc,
 		client->SetVar("maxLockTime", maxLockTime);
 
     // If progress is set, set the progress var
-    if( ((PerlClientUser*)ui)->GetProgress() != 0 )
+    if( ((PerlClientUser*)ui)->GetProgress() != 0 ){
     	client->SetVar( P4Tag::v_progress, 1);
+	}
 
 	client->SetArgv(argc, argv);
 	client->Run(cmd, ui);
@@ -640,4 +641,3 @@ PerlClientApi::FormatSpec(const char *type, HV *hash) {
 
 	return newSVpv(buf.Text(), buf.Length());
 }
-

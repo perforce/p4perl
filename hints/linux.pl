@@ -1,16 +1,16 @@
 #*******************************************************************************
 # Copyright (c) 2001-2008, Perforce Software, Inc.  All rights reserved.
-# 
+#
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
-# 
+#
 # 1.  Redistributions of source code must retain the above copyright
 #     notice, this list of conditions and the following disclaimer.
-# 
+#
 # 2.  Redistributions in binary form must reproduce the above copyright
 #     notice, this list of conditions and the following disclaimer in the
 #     documentation and/or other materials provided with the distribution.
-# 
+#
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 # AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 # IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -30,10 +30,3 @@ use Config;
 #
 $self->{CC} 		= "c++";
 $self->{LD} 		= "c++";
-
-# Some Perl builds - notably ActiveState, but also some Red Hat ones use very
-# restrictive preprocessor settings which are no good to us. So, just to be
-# on the safe side, we'll also add in what we need here.
-
-$self->{DEFINE}		.= " -D_BSD_SOURCE -D_SVID_SOURCE";
-

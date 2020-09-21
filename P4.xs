@@ -23,7 +23,6 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "perlheaders.h"
 
 // Undef conflicting macros defined by Perl
 #undef Error
@@ -32,6 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #undef Copy
 
 #include "clientapi.h"
+#include "perlheaders.h"
 #include "strtable.h"
 #include "debug.h"
 #include "p4perldebug.h"

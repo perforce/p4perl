@@ -46,10 +46,10 @@ P4::IterateSpec
 =head1 SYNOPSIS
 
 	use P4;
-	
+
 	my $p4 = P4->new;
 	$p4->Connect or die "Couldn't connect";
-		
+
 	my $i = $p4->IterateClients();
 	while($i->hasNext) {
 		my $spec = $i->next;
@@ -59,7 +59,7 @@ P4::IterateSpec
 =head1 DESCRIPTION
 
 P4::IterateSpec is a class for iterating over Perforce specs.
-It's intended to be used on one spec type, returning an 
+It's intended to be used on one spec type, returning an
 iterable object with next() and hasNext() methods.
 
 Arguments can be passed to the iterator to filter the results,
@@ -71,7 +71,7 @@ or like the Run("cmd") option the spec type can be passed as an
 argument, for example:
 
 	$p4->Iterate( "changes" );
-	
+
 =head1 METHODS
 
 =cut
@@ -88,7 +88,6 @@ sub new {
 	$self->{list} = $p4->Run( $type, @_ );
 	$self->{type} = $type;
 
-print("type: " . $type . "\n");
 	return $self;
 }
 
@@ -136,8 +135,8 @@ sub next {
 
 =over
 
-Returns true (1) if there are specs left in the iterator;  
-otherwise false if empty. 
+Returns true (1) if there are specs left in the iterator;
+otherwise false if empty.
 
 =back
 

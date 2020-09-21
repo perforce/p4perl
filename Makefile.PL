@@ -41,7 +41,7 @@ use File::Copy;
 use English;
 
 # --- Supported API version ---------------------------------------------------
-our $TARGET_API_VERSION = "2019.1";
+our $TARGET_API_VERSION = "2020.1";
 
 # --- GLOBALS -----------------------------------------------------------------
 our $ssl_path	= undef;	## SSL path string
@@ -107,7 +107,7 @@ sub p4perl_version {
 	# Read API version file
 	my $ver = new Version("Version");
 	die("Aborting: Cannot read local p4-perl Version file!") unless $ver;
-	
+
 	# logging...
 	print( "  building p4perl version: \t" . $ver->toPatch() . "\n" );
 	return $ver;
@@ -206,12 +206,12 @@ sub check_api_version {
 	my $t = $target->getRelease();
 
 	return 1 if ( $v == $t );
-	
+
 	my $string = $ver->toString();
 	print <<EOF;
 
 This version of P4Perl was designed for use with the $TARGET_API_VERSION
-release of the Perforce C++ API. Using it with other releases may not work, 
+release of the Perforce C++ API. Using it with other releases may not work,
 and is not supported. ($string)
 
 EOF
@@ -289,6 +289,13 @@ sub add_p4_libs( $$$$ ) {
 		push( @libs, "ssleay32" );
 	}
 
+	# [MSWIN32] and NOT MinGW
+	elsif ( $os eq "MSWIN32" ) {
+		push( @libs, "ssl" );
+		push( @libs, "crypto" );
+		push( @libs, "crypt32" );
+	}
+
 	# [LINUX]
 	elsif ( $os eq "LINUX" ) {
 		push( @libs, "rt" );
@@ -349,7 +356,7 @@ sub get_platform {
 	#
 	my $os = $Config{'osname'};
 	my @fields = split( /-/, $Config{'archname'} );
-	
+
 	print( "  with archname: \t\t" . $Config{'archname'} . "\n");
 
 	my $plat;
@@ -370,7 +377,7 @@ sub get_platform {
 	}
 
 	print("	 using os: \t\t\t$os\n");
-	print("	 using platform: \t\t$plat\n");	
+	print("	 using platform: \t\t$plat\n");
 	return $plat;
 }
 
@@ -426,7 +433,7 @@ sub get_osver {
 
 # -----------------------------------------------------------------------------
 # Function:		config_sub
-# Description:	Called by WriteMakefile - adds the Perforce API path to the 
+# Description:	Called by WriteMakefile - adds the Perforce API path to the
 #				header includes and libs
 # -----------------------------------------------------------------------------
 sub config_sub {

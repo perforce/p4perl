@@ -126,7 +126,11 @@ P4DvcsClient::Init(HV * args) {
 
     Error e;
 
+#if __cplusplus>= 201103L  || (defined(_MSC_VER) && _MSC_VER >= 1900)
+    unique_ptr<ServerHelperApi> personalServer( createServer(user, client, dir) );
+#else
     auto_ptr<ServerHelperApi> personalServer( createServer(user, client, dir) );
+#endif
 
     if( personalServer.get() == NULL ) {
         warn("ServerHelperApi did not return a server.");
@@ -197,7 +201,11 @@ P4DvcsClient::Clone(HV * args) {
 
     Error e;
 
-    auto_ptr<ServerHelperApi> personalServer( createServer(user, client, dir) );
+    #if __cplusplus>= 201103L  || (defined(_MSC_VER) && _MSC_VER >= 1900)
+        unique_ptr<ServerHelperApi> personalServer( createServer(user, client, dir) );
+    #else
+        auto_ptr<ServerHelperApi> personalServer( createServer(user, client, dir) );
+    #endif
 
     if( personalServer.get() == NULL) {
         warn("ServerHelperApi did not return a server.");
