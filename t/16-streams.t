@@ -1,4 +1,4 @@
-use Test::More tests => 7;
+use Test::More tests => 8;
 BEGIN { use_ok( 'P4' ); }						## test 1
 
 # Load test utils
@@ -22,6 +22,9 @@ ok( scalar( @depots ) == 2 );					## test 5
 
 my $stream = $p4->FetchStream("//streams/MAIN");
 $stream->{'Type'} = "mainline";
+$stream->{'Paths'} = "## First comment,
+            share ... ## Second comment,
+            ## Third comment";
 $p4->SaveDepot($stream);
 
 ## look for 'extraTag' field names like 'firmerThanParent'
@@ -29,5 +32,10 @@ ok( $stream->{'firmerThanParent'} );			## test 6
 
 $p4->SetStreams( 0 );
 ok( !$p4->IsStreams() );						## test 7
+
+my $readStream = $p4->FetchStream("//streams/MAIN");
+ok ( $stream->{'Paths'} ==  "## First comment,
+            share ... ## Second comment,
+            ## Third comment" );                ## test 8
 
 $p4->Disconnect();

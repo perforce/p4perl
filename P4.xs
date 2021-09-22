@@ -2016,7 +2016,7 @@ SetVersion( THIS, version )
 	    if( !c ) XSRETURN_UNDEF;
 	    c->SetVersion( version );
 
-void
+SV *
 Tagged( THIS, flag, ... )
 	SV *	THIS
 	int	flag
@@ -2038,8 +2038,8 @@ Tagged( THIS, flag, ... )
 
 	    if( !argc )
 	    {
-		c->Tagged( flag );
-		return;
+	        c->Tagged( flag );
+	        return;
 	    }
 		
 	    stindex = va_start;
@@ -2055,15 +2055,20 @@ Tagged( THIS, flag, ... )
 	    // Perl will die for us if the user has passed something other
 	    // than a CV here. No need for us to check.
 	    c->Tagged( flag );
-	    perl_call_sv( cv, G_DISCARD|G_NOARGS );
+	    PUTBACK ;
+	    perl_call_sv( cv, G_SCALAR );
 
 	    // Cleanup
 	    SPAGAIN;
+	    RETVAL = newSVsv(POPs);
 	    PUTBACK;
 	    FREETMPS;
 	    LEAVE;
 
 	    c->Tagged( old_tagged );
+
+	OUTPUT:
+	    RETVAL
 
 
 

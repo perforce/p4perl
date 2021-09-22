@@ -41,7 +41,7 @@ use File::Copy;
 use English;
 
 # --- Supported API version ---------------------------------------------------
-our $TARGET_API_VERSION = "2020.1";
+our $TARGET_API_VERSION = "2021.1";
 
 # --- GLOBALS -----------------------------------------------------------------
 our $ssl_path	= undef;	## SSL path string
@@ -281,7 +281,7 @@ sub add_p4_libs( $$$$ ) {
 	my $libpath = join( " -L", "", @paths );
 
 	# Build library list
-	my @libs = ( "client", "rpc", "supp" );
+	my @libs = ( "client", "rpc", "supp", "p4script", "p4script_c", "p4script_curl", "p4script_sqlite"  );
 
 	# [MSWIN32]
 	if ( $os eq "MSWIN32" && $Config{cc} !~ /gcc/i ) {

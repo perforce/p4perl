@@ -33,8 +33,8 @@ is( $r[ 0 ], $val );
 $p4->Tagged( 1 );
 ok( $p4->IsTagged() );
 
-my $sub = sub { @r = $p4->RunCounter( 'change' ) };
+my $sub = sub { $p4->RunCounter( 'change' ) };
 
-$p4->Tagged( 0, $sub );
+$r = $p4->Tagged( 0, $sub );
 is( $r[ 0 ], $val );
 ok( $p4->IsTagged() );

@@ -117,24 +117,7 @@ struct defaultspec {
 	"SpecMap;code:259;type:wlist;len:64;;"
     },
     {
-	"extension",
-	"ExtName;code:901;type:line;opt:once;len:64;;"
-	"ExtDescription;code:902;type:text;opt:once;len:128;;"
-	"ExtVersion;code:903;type:line;opt:once;len:32;;"
-	"ExtUUID;code:904;type:line;opt:once;len:36;;"
-	"ExtRev;code:905;type:word;opt:once;len:20;;"
-	"ExtMaxScriptTime;code:913;type:word;len:12;;"
-	"ExtMaxScriptMem;code:914;type:word;len:12;;"
-	"ExtAllowedGroups;code:915;type:wlist;len:32;opt:default;;"
-	"ExtEnabled;code:916;type:word;opt:default;len:12;;"
-	"ExtP4USER;code:917;type:word;opt:default;len:12;;"
-	"Name;code:906;type:line;opt:default;len:32;;"
-	"Owner;code:907;type:word;opt:default;len:36;;"
-	"Update;code:908;type:date;opt:always;fmt:L;len:20;;"
-	"Description;code:909;type:text;opt:required;len:128;;"
-	"ExtConfig;code:912;type:text;opt:required;len:256;;"
-    },
-    {
+
 	"group",
 	"Group;code:401;rq;ro;len:32;;"
 	"MaxResults;code:402;type:word;len:12;;"
@@ -215,6 +198,7 @@ struct defaultspec {
 	"Users;code:459;len:8;;"
 	"Files;code:460;len:8;;"
 	"Repos;code:462;len:8;;"
+	"ExtraCapabilities;code:463;type:llist;len:512;;"
     },
     {
 	"protect",
@@ -240,16 +224,20 @@ struct defaultspec {
     },
     {
 	"repo",
-	"Repo;code:1001;rq;ro;len:128;;"
-	"Owner;code:1002;len:32;;"
+	"Repo;code:1001;rq;ro;fmt:L;len:128;;"
+	"Owner;code:1002;fmt:R;len:32;;"
 	"Created;code:1003;type:date;ro;fmt:L;len:20;;"
-	"Pushed;code:1004;type:date;ro;fmt:L;len:20;;"
-	"ForkedFrom;code:1005;ro;len:128;;"
+	"Pushed;code:1004;type:date;ro;fmt:R;len:20;;"
+	"ForkedFrom;code:1005;ro;fmt:L;len:128;;"
 	"Description;code:1006;type:text;len:128;;"
-	"DefaultBranch;code:1007;len:32;;"
-	"MirroredFrom;code:1008;len:32;;"
+	"DefaultBranch;code:1007;fmt:L;len:32;;"
+	"MirroredFrom;code:1008;fmt:R;len:32;;"
 	"Options;code:1009;type:select;len:10;val:lfs/nolfs;;"
-    "GconnMirrorServerId;code:1010;len:32;;"
+	"GconnMirrorServerId;code:1010;fmt:L;len:32;;"
+	"GconnMirrorSecretToken;code:NNN;len:36;;"
+	"GconnMirrorStatus;code:NNN;len:8;;"
+	"GconnMirrorExcludedBranches;code:NNN;len:256;;"
+	"GconnMirrorHideFetchUrl;code:NNN;len:5;;"
     },
     {
 	"server",
@@ -265,7 +253,7 @@ struct defaultspec {
 	"Description;code:757;type:text;len:128;;"
 	"User;code:761;type:line;len:64;;"
 	"AllowedAddresses;code:763;type:wlist;len:64;;"
-    "UpdateCachedRepos;code:766;type:wlist;len:64;;"
+	"UpdateCachedRepos;code:766;type:wlist;len:64;;"
 	"ClientDataFilter;code:758;type:wlist;len:64;;"
 	"RevisionDataFilter;code:759;type:wlist;len:64;;"
 	"ArchiveDataFilter;code:760;type:wlist;len:64;;"
@@ -279,7 +267,7 @@ struct defaultspec {
 	"Values;code:354;type:wlist;words:2;;"
 	"Presets;code:355;type:wlist;words:2;;"
 	"Openable;code:362;type:wlist;words:2;;"
-    "Maxwords;code:361;type:wlist;words:2;;"
+	"Maxwords;code:361;type:wlist;words:2;;"
 	"Comments;code:356;type:text;;"
     },
     {
@@ -296,6 +284,8 @@ struct defaultspec {
 	"allsubmit/ownersubmit,unlocked/locked,"
 	"toparent/notoparent,fromparent/nofromparent,"
 	"mergedown/mergeany;open:isolate;;"
+	"ParentView;code:NNN;rq;open:isolate;"
+	"pre:inherit;val:noinherit/inherit;;"
 	"Paths;code:710;rq;type:wlist;words:2;maxwords:3;len:64;open:propagate;fmt:C;;"
 	"Remapped;code:711;type:wlist;words:2;len:64;open:propagate;fmt:C;;"
 	"Ignored;code:712;type:wlist;words:1;len:64;open:propagate;fmt:C;;"
