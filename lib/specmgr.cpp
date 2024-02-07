@@ -47,7 +47,7 @@ struct defaultspec {
     const char *type;
     const char *spec;
 } speclist[] = {
-
+ 
     {
 	"branch",
 	"Branch;code:301;rq;ro;fmt:L;len:32;;"
@@ -88,7 +88,8 @@ struct defaultspec {
 	"AltRoots;code:308;type:llist;len:64;;"
 	"Options;code:309;type:line;len:64;val:"
 	"noallwrite/allwrite,noclobber/clobber,nocompress/compress,"
-	"unlocked/locked,nomodtime/modtime,normdir/rmdir;;"
+	"unlocked/locked,nomodtime/modtime,normdir/rmdir,"
+	"noaltsync/altsync;;"
 	"SubmitOptions;code:313;type:select;fmt:L;len:25;val:"
 	"submitunchanged/submitunchanged+reopen/revertunchanged/"
 	"revertunchanged+reopen/leaveunchanged/leaveunchanged+reopen;;"
@@ -117,13 +118,14 @@ struct defaultspec {
 	"SpecMap;code:259;type:wlist;len:64;;"
     },
     {
-
 	"group",
 	"Group;code:401;rq;ro;len:32;;"
+	"Description;code:NNN;type:text;fmt:L:len:128;;"
 	"MaxResults;code:402;type:word;len:12;;"
 	"MaxScanRows;code:403;type:word;len:12;;"
 	"MaxLockTime;code:407;type:word;len:12;;"
 	"MaxOpenFiles;code:413;type:word;len:12;;"
+	"MaxMemory;code:NNN;type:word;len:12;;"
 	"Timeout;code:406;type:word;len:12;;"
 	"PasswordTimeout;code:409;type:word;len:12;;"
 	"LdapConfig;code:410;type:line;len:128;;"
@@ -278,7 +280,8 @@ struct defaultspec {
 	"Owner;code:704;len:32;open:isolate;;"
 	"Name;code:703;rq;type:line;len:32;open:isolate;;"
 	"Parent;code:702;rq;len:64;open:isolate;;"
-	"Type;code:708;rq;len:32;open:isolate;;"
+	"Type;code:708;rq;type:select;len:32;open:isolate;"
+	"val:mainline/virtual/development/release/task;;"
 	"Description;code:709;type:text;len:128;open:isolate;;"
 	"Options;code:707;type:line;len:64;val:"
 	"allsubmit/ownersubmit,unlocked/locked,"
@@ -286,6 +289,7 @@ struct defaultspec {
 	"mergedown/mergeany;open:isolate;;"
 	"ParentView;code:NNN;rq;open:isolate;"
 	"pre:inherit;val:noinherit/inherit;;"
+	"Components;code:NNN;type:wlist;words:3;maxwords:4;len:64;open:propagate;fmt:C;;"
 	"Paths;code:710;rq;type:wlist;words:2;maxwords:3;len:64;open:propagate;fmt:C;;"
 	"Remapped;code:711;type:wlist;words:2;len:64;open:propagate;fmt:C;;"
 	"Ignored;code:712;type:wlist;words:1;len:64;open:propagate;fmt:C;;"
