@@ -41,7 +41,7 @@ use File::Copy;
 use English;
 
 # --- Supported API version ---------------------------------------------------
-our $TARGET_API_VERSION = "2023.2";
+our $TARGET_API_VERSION = "2024.1";
 
 # --- GLOBALS -----------------------------------------------------------------
 our $ssl_path	= undef;	## SSL path string

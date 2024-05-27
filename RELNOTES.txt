@@ -1,7 +1,7 @@
                             Release Notes for
                  P4Perl, Perforce's script API for Perl
 
-                             Version 2023.2
+                             Version 2024.1
 
 Introduction
 
@@ -25,7 +25,7 @@ Installing P4Perl
 
 	Windows users can download an installer containing pre-built
 	packages for P4Perl from the Perforce FTP site at
-	ftp://ftp.perforce.com/perforce for this release for Strawberry Perl
+	https://ftp.perforce.com/perforce for this release for Strawberry Perl
 	5.32.  Users on other platforms (including ActiveState Perl) must build
 	from source, as detailed below.
 
@@ -34,7 +34,7 @@ Installing P4Perl
 Building P4Perl from Source
 
 	1. Download the Perforce C++ API from the Perforce FTP site at
-	   "ftp://ftp.perforce.com/perforce". The API archive is located in
+	   "https://ftp.perforce.com/perforce". The API archive is located in
 	   release and platform-specific subdirectories and is named "p4api.zip"
 	   for Windows and "p4api.tgz" for non-Windows platforms.
 
@@ -44,10 +44,8 @@ Building P4Perl from Source
 	   directories you will need "p4api_vs2017_dyn_openssl1.1.1.zip" or similar.
 
 
-	   Note: 32-bit builds of P4Perl require a 32-bit version of the
-	         C++ API and a 32-bit version of Perl. 64-bit builds of
-	         P4Perl require a 64-bit version of the C++ API and a
-	         64-bit version of Perl.
+	   Note: 64-bit builds of P4Perl require a 64-bit version of the C++ API
+	         and a 64-bit version of Perl.
 
 	2. Unzip the archive into an empty directory.
 
@@ -101,9 +99,9 @@ Building P4Perl from Source
 	   Note: on certain Windows platforms and versions of Perl,
 	         the manifest file is not automatically applied to P4.dll,
 	         so it must be done manually. This is known to happen
-	         on 32-bit Perl 5.8.x and 64-bit Perl 5.8.9.
-	         Tests failing with "Can't load ... P4.dll" are a symptom
-	         of this. The two commands to run are:
+	         on 64-bit Perl 5.8.9. Tests failing with
+	         "Can't load ... P4.dll" are a symptom of this.
+	         The two commands to run are:
 
 	         mt -nologo -manifest blib\arch\auto\P4\P4.dll.manifest \
 	            -outputresource:blib\arch\auto\P4\P4.dll;2
@@ -144,12 +142,12 @@ Compatibility Statements
 
 	Server Compatibility
 
-    This release of P4Perl officially supports Helix Core Server 2023.2.
+    This release of P4Perl officially supports Helix Core Server 2024.1.
 
 
 	API Compatibility
 
-	  This release of P4Perl is built against the 2023.2 (2023.2/2519561)
+	  This release of P4Perl is built against the 2024.1 (2024.1/2596294)
 	  Perforce API. Older releases of the Perforce API may work but are no
 	  longer supported.
 
@@ -168,9 +166,9 @@ Compatibility Statements
 	  built against. Running P4Perl linked to an older library will
 	  fail with the error:
 
-	    "SSL library must be at least version 1.0.1."
+	    "SSL library must be at least version 1.1.1"
 
-	  This release of P4Perl is supported with OpenSSL 1.0.2, 1.1.1 and 3.0.8.
+	  This release of P4Perl is supported with OpenSSL 1.1.1 and 3.0.8.
 
 	Platform Compatibility
 
@@ -291,6 +289,13 @@ Key to symbols used in change notes below.
 	  * -- requires new P4Perl
 	 ** -- requires P4Perl built with new P4API
 	*** -- requires new p4d server program
+
+--------------------------------------------------------------------------
+
+New functionality in 2024.1 (2024.1/2601332) (2024/05/22)
+
+	#2599289 (Job #120166 ) * ** ***
+        This release of P4Perl supports the 2024.1 Perforce API (2024.1/2596294)
 
 --------------------------------------------------------------------------
 
