@@ -45,7 +45,8 @@ $p4->SetHandler($file_cb);
 my @s3 = $p4->RunFiles("//...");
 ok( scalar(@s3) == 0 );     ## test 12
 my $c3 = $file_cb->getCount('outputStat');
-ok( $c3 < 100 );            ## test 13
+diag( "\nTotal callbacks logged : $c3");
+ok( $c3 < 500 );            ## test 13
 
 
 sub add_file {

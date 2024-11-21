@@ -47,7 +47,7 @@ struct defaultspec {
     const char *type;
     const char *spec;
 } speclist[] = {
- 
+
     {
 	"branch",
 	"Branch;code:301;rq;ro;fmt:L;len:32;;"
@@ -135,6 +135,10 @@ struct defaultspec {
 	"Subgroups;code:404;type:wlist;len:32;opt:default;;"
 	"Owners;code:408;type:wlist;len:32;opt:default;;"
 	"Users;code:405;type:wlist;len:32;opt:default;;"
+    },
+    {
+	"hotfiles",
+	"HotFiles;code:1051;fmt:C;type:wlist;words:1;maxwords:3;len:64;opt:default;z;;"
     },
     {
 	"job",

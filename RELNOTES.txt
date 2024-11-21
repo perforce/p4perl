@@ -1,7 +1,7 @@
                             Release Notes for
                  P4Perl, Perforce's script API for Perl
 
-                             Version 2024.1
+                             Version 2024.2
 
 Introduction
 
@@ -26,7 +26,7 @@ Installing P4Perl
 	Windows users can download an installer containing pre-built
 	packages for P4Perl from the Perforce FTP site at
 	https://ftp.perforce.com/perforce for this release for Strawberry Perl
-	5.32.  Users on other platforms (including ActiveState Perl) must build
+	5.38.  Users on other platforms (including ActiveState Perl) must build
 	from source, as detailed below.
 
 --------------------------------------------------------------------------
@@ -142,22 +142,22 @@ Compatibility Statements
 
 	Server Compatibility
 
-    This release of P4Perl officially supports Helix Core Server 2024.1.
+    This release of P4Perl officially supports Helix Core Server 2024.2.
 
 
 	API Compatibility
 
-	  This release of P4Perl is built against the 2024.1 (2024.1/2596294)
+	  This release of P4Perl is built against the 2024.2 (2024.2/2675662)
 	  Perforce API. Older releases of the Perforce API may work but are no
 	  longer supported.
 
 	Perl Compatibility
 
 	  While Perl is usually backward compatible, we have tested this release of 
-	  P4Perl to support building from source with Perl versions 5.26, 5.30 and 
-	  5.34
+	  P4Perl to support building from source with Perl versions 5.26, 5.30, 
+	  5.34 and 5.38
 
-	  The P4Perl 64-bit Windows installer requires Perl 5.32 64-bit.
+	  The P4Perl 64-bit Windows installer requires Perl 5.38 64-bit.
 
 	OpenSSL Compatibility
 
@@ -175,8 +175,15 @@ Compatibility Statements
 	  While P4Perl is generally portable, this release is certified
 	  only on the following platforms:
 
-	    Linux kernel 2.6+ (glibc 2.12+) for Intel(x86_64)
-	    Windows 10 for Intel(x64)
+	    Linux kernel 2.6+ for Intel(x86_64)
+	        Ubuntu 20.04, 22.04, 24.04
+	        Rocky Linux 8, 9
+	    Linux kernel 2.6+ for ARM(aarch64)
+	        Ubuntu 20.04, 22.04, 24.04
+	        Rocky Linux 9
+	    Windows for Intel(ntx64)
+	        Server 2016, 2019, 2022
+	        Windows 10, 11
 
 	Compiler Compatibility
 
@@ -188,7 +195,7 @@ Compatibility Statements
 	  of the compiler can cause linker errors due to differences in
 	  name handling between compilers.
 
-	  The Windows installer was built with Strawberry Perl 5.32
+	  The Windows installer was built with Strawberry Perl 5.38
 
 	Compatibility with Previous Releases
 
@@ -290,6 +297,19 @@ Key to symbols used in change notes below.
 	 ** -- requires P4Perl built with new P4API
 	*** -- requires new p4d server program
 
+--------------------------------------------------------------------------
+
+New functionality in 2024.2 (2024.2/2682743) (2024/11/15)
+
+	#2678431 (Job #122588 ) * ** ***
+        This release of P4Perl supports the 2024.2 Perforce API (2024.2/2675662)
+
+	#2669611 (Job #122593 ) * **
+        Added the support and installer for perl 5.38.
+
+	#2655061 (Job #121113 ) * **
+        Added the support for Linux ARM64/AARCH64 architecture.
+		
 --------------------------------------------------------------------------
 
 New functionality in 2024.1 (2024.1/2601332) (2024/05/22)
