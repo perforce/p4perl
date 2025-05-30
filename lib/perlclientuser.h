@@ -51,6 +51,7 @@ public:
 
 	// Client User methods overridden here
 	void Message(Error *e);
+	void HandleError(Error *e);
 	void OutputText(const char *data, int length);
 	void OutputInfo(char level, const char *data);
 	void OutputStat(StrDict *values);

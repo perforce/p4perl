@@ -1,7 +1,7 @@
                             Release Notes for
-                 P4Perl, Perforce's script API for Perl
+                         P4Perl, P4 API for Perl
 
-                             Version 2024.2
+                             Version 2025.1
 
 Introduction
 
@@ -21,6 +21,25 @@ Introduction
 
 --------------------------------------------------------------------------
 
+Important Product Rebrand Notice
+
+	Helix Core is now P4
+	Perforce has a new look and logo that reflects our place in DevOps
+	workflows. As part of these changes, Helix Core is now P4. Name updates
+	and new icons to align with the P4 branding will be rolled out soon.
+	To learn more, see:
+	 https://www.perforce.com/blog/vcs/introducing-the-p4-platform
+
+--------------------------------------------------------------------------
+
+Important End-of-Life Notice
+
+    This release of P4Perl would be the last to support and test against 
+    Perl 5.26, 5.30 and 5.36, which are in EOL status. This is part of our 
+	commitment to focus on supported technology platforms.
+
+--------------------------------------------------------------------------
+
 Installing P4Perl
 
 	Windows users can download an installer containing pre-built
@@ -33,18 +52,18 @@ Installing P4Perl
 
 Building P4Perl from Source
 
-	1. Download the Perforce C++ API from the Perforce FTP site at
+	1. Download the P4 C/C++ API from the Perforce FTP site at
 	   "https://ftp.perforce.com/perforce". The API archive is located in
 	   release and platform-specific subdirectories and is named "p4api.zip"
 	   for Windows and "p4api.tgz" for non-Windows platforms.
 
 	   For Windows platforms using Strawberry Perl you will need to use the
-	   MinGW builds of the P4API under the bin.mingw* directories.  Older
+	   MinGW builds of the P4 C/C++ API under the bin.mingw* directories.  Older
 	   versions of ActiveState Perl used Visual Studio, so under the bin.ntx*
 	   directories you will need "p4api_vs2017_dyn_openssl1.1.1.zip" or similar.
 
 
-	   Note: 64-bit builds of P4Perl require a 64-bit version of the C++ API
+	   Note: 64-bit builds of P4Perl require a 64-bit version of the P4 C/C++ API
 	         and a 64-bit version of Perl.
 
 	2. Unzip the archive into an empty directory.
@@ -58,21 +77,21 @@ Building P4Perl from Source
 
 	   On Unix platforms:
 
-	   perl Makefile.PL --apidir=<absolute path to Perforce C++ API> \
+	   perl Makefile.PL --apidir=<absolute path to P4 C/C++ API> \
 	                    --ssl=<absolute path to SSL libraries>
 	   make
 
 
 	   On Windows platforms (with Strawberry Perl built with MinGW):
 
-	   perl Makefile.PL --apidir=<absolute path to Perforce C++ API> \
+	   perl Makefile.PL --apidir=<absolute path to P4 C/C++ API> \
 	                    --ssl=<absolute path to SSL libraries>
 	   gmake
 
 
 	   On Windows platforms (with Perl built with Visual Studio):
 
-	   perl Makefile.PL --apidir=<absolute path to Perforce C++ API> \
+	   perl Makefile.PL --apidir=<absolute path to P4 C/C++ API> \
 	                    --ssl=<absolute path to SSL libraries>
 	   nmake
 
@@ -82,7 +101,7 @@ Building P4Perl from Source
 	   ppm install MinGW
 	   ppm install dmake
 	   perl Makefile.PL -make=dmake \
-	                    --apidir=<absolute path to Perforce C++ API> \
+	                    --apidir=<absolute path to P4 C/C++ API> \
 	                    --ssl=<absolute path to SSL libraries>
 	   dmake
 	   dmake install
@@ -108,8 +127,8 @@ Building P4Perl from Source
 
 	         del blib\arch\auto\P4\P4.dll.manifest
 
-	   Note: the test harness requires the Perforce server executable
-	         p4d and Perforce command line executable p4 to be
+	   Note: the test harness requires the P4 server executable
+	         p4d and P4 command line executable p4 to be
 	         installed and in the PATH.
 
 	5. To install P4Perl, run the following command:
@@ -124,9 +143,9 @@ Building P4Perl from Source
 	SSL support
 	-----------
 
-	Perforce Server 2012.1 and later supports SSL connections and the
-	C++ API has been compiled with this support. For applications that
-	do not require SSL support the C++ API provides a stub library
+	P4 Server 2012.1 and later supports SSL connections and the
+	P4 C/C++ API has been compiled with this support. For applications that
+	do not require SSL support the P4 C/C++ API provides a stub library
 	(libp4sslstub.*) to satisfy the linker requirements.
 
 	P4Perl will build with the stub library by default. To enable
@@ -142,13 +161,13 @@ Compatibility Statements
 
 	Server Compatibility
 
-    This release of P4Perl officially supports Helix Core Server 2024.2.
-
+	  This release of P4Perl supports the 2025.1 P4 Server.
+	  Older releases might work but are not supported.
 
 	API Compatibility
 
-	  This release of P4Perl is built against the 2024.2 (2024.2/2675662)
-	  Perforce API. Older releases of the Perforce API may work but are no
+	  This release of P4Perl is built against the 2025.1 (2025.1/2761706)
+	  P4 C/C++ API. Older releases of the P4 C/C++ API may work but are no
 	  longer supported.
 
 	Perl Compatibility
@@ -162,7 +181,7 @@ Compatibility Statements
 	OpenSSL Compatibility
 
 	  To build P4Perl with encrypted communication support, you must
-	  use the version of OpenSSL that Perforce C/C++ API has been
+	  use the version of OpenSSL that P4 C/C++ API has been
 	  built against. Running P4Perl linked to an older library will
 	  fail with the error:
 
@@ -189,7 +208,7 @@ Compatibility Statements
 
 	  To build P4Perl from source, you must use a version of Perl that
 	  has been compiled with the same compiler used to build the
-	  Perforce C++ API. For most platforms, use gcc/g++.
+	  P4 C/C++ API. For most platforms, use gcc/g++.
 
 	  Attempting to use a different compiler or a different version
 	  of the compiler can cause linker errors due to differences in
@@ -204,15 +223,15 @@ Compatibility Statements
 
 	Known Limitations
 
-	  The Perforce client-server protocol is not designed to support
+	  The P4 client-server protocol is not designed to support
 	  multiple concurrent queries over the same connection. For this
-	  reason, multi-threaded applications using the C++ API or the
+	  reason, multi-threaded applications using the P4 C/C++ API or the
 	  script APIs (P4Perl, P4Ruby, etc.) should ensure that a
 	  separate connection is used for each thread or that only one
 	  thread may use a shared connection at a time.
 	  
 	  P4Perl does not support the P4VFS sync functionality due to compiler
-	  inconsistencies with the P4API builds
+	  inconsistencies with the P4 C/C++ API builds
 
 	Deleted Methods
 	---------------
@@ -253,7 +272,7 @@ Compatibility Statements
 	Renamed Methods
 	---------------
 	In the Public Depot version of P4Perl, unknown methods are assumed
-	to be Perforce command and are executed accordingly. For example,
+	to be P4 command and are executed accordingly. For example,
 	you can issue a "p4 info" command as follows:
 
 		$p4->Info();
@@ -261,9 +280,9 @@ Compatibility Statements
 	This approach causes problems with keywords like "client," which
 	is both a command and a setting in the client environment
 	(P4CLIENT). To resolve this ambiguity and to make P4Perl
-	consistent with other Perforce scripting interfaces, this
-	convention has been changed. In Perforce P4Perl, methods with
-	names prefixed with "Run" are interpreted as Perforce commands.
+	consistent with other P4 scripting interfaces, this
+	convention has been changed. In P4Perl, methods with
+	names prefixed with "Run" are interpreted as P4 commands.
 	For example:
 
 		$p4->RunInfo();
@@ -272,7 +291,7 @@ Compatibility Statements
 	----------------------------
 	In the Public Depot version of P4Perl, tagged output and
 	form parsing mode are off by default but most scripts
-	turn them on immediately. In Perforce P4Perl, both form
+	turn them on immediately. In P4Perl, both form
 	parsing and tagged output are on by default.
 
 	Form parsing cannot be explicitly disabled, but tagged output may
@@ -294,9 +313,23 @@ Compatibility Statements
 Key to symbols used in change notes below.
 
 	  * -- requires new P4Perl
-	 ** -- requires P4Perl built with new P4API
+	 ** -- requires P4Perl built with new P4 C/C++ API
 	*** -- requires new p4d server program
 
+--------------------------------------------------------------------------
+
+New functionality in 2025.1 (2025.1/2767479) (2025/05/21)
+
+	#2757776 (Job #125784 ) * ** ***
+        This release of P4Perl supports the 2025.1 P4 C/C++ API (2025.1/2761706)
+
+Bugs fixed in 2025.1
+
+	#2753721 (Job #125747) *
+        Override the "HandleError" method in "perlclientuser", to process error 
+        data after a failed command. This change ensure errors like "Can't clobber 
+        writable file" are captured and processed as P4Message.
+		
 --------------------------------------------------------------------------
 
 New functionality in 2024.2 (2024.2/2682743) (2024/11/15)

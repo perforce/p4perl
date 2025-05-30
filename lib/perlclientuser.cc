@@ -182,6 +182,13 @@ void PerlClientUser::Message(Error *e) {
 	results.AddMessage(e);
 }
 
+void PerlClientUser::HandleError(Error *e) {
+	if (P4PERL_DEBUG_FLOW)
+		PerlIO_stdoutf("[PerlClientUser:Message]: Received message\n");
+
+	results.AddMessage(e);
+}
+
 void PerlClientUser::OutputText(const char *data, int length) {
 	if (P4PERL_DEBUG_FLOW)
 		PerlIO_stdoutf("[PerlClientUser::OutputText]: Received %d bytes\n",
