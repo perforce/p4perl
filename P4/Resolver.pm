@@ -99,7 +99,7 @@ sub Resolve( $ )
     my $mergeData = shift;
 
     return "s" if( $mergeData->MergeHint() eq "e" );
-    return $mergeData()->MergeHint();
+    return $mergeData->MergeHint();
 }
 
 =pod

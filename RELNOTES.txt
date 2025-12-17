@@ -1,7 +1,7 @@
                             Release Notes for
                          P4Perl, P4 API for Perl
 
-                             Version 2025.1
+                             Version 2025.2
 
 Introduction
 
@@ -29,14 +29,6 @@ Important Product Rebrand Notice
 	and new icons to align with the P4 branding will be rolled out soon.
 	To learn more, see:
 	 https://www.perforce.com/blog/vcs/introducing-the-p4-platform
-
---------------------------------------------------------------------------
-
-Important End-of-Life Notice
-
-    This release of P4Perl would be the last to support and test against 
-    Perl 5.26, 5.30 and 5.36, which are in EOL status. This is part of our 
-	commitment to focus on supported technology platforms.
 
 --------------------------------------------------------------------------
 
@@ -161,12 +153,12 @@ Compatibility Statements
 
 	Server Compatibility
 
-	  This release of P4Perl supports the 2025.1 P4 Server.
+	  This release of P4Perl supports the 2025.2 P4 Server.
 	  Older releases might work but are not supported.
 
 	API Compatibility
 
-	  This release of P4Perl is built against the 2025.1 (2025.1/2761706)
+	  This release of P4Perl is built against the 2025.2 (2025.2/2852709)
 	  P4 C/C++ API. Older releases of the P4 C/C++ API may work but are no
 	  longer supported.
 
@@ -196,10 +188,10 @@ Compatibility Statements
 
 	    Linux kernel 2.6+ for Intel(x86_64)
 	        Ubuntu 20.04, 22.04, 24.04
-	        Rocky Linux 8, 9
+	        Rocky Linux 8, 9, 10
 	    Linux kernel 2.6+ for ARM(aarch64)
 	        Ubuntu 20.04, 22.04, 24.04
-	        Rocky Linux 9
+	        Rocky Linux 9, 10
 	    Windows for Intel(ntx64)
 	        Server 2016, 2019, 2022
 	        Windows 10, 11
@@ -315,6 +307,16 @@ Key to symbols used in change notes below.
 	  * -- requires new P4Perl
 	 ** -- requires P4Perl built with new P4 C/C++ API
 	*** -- requires new p4d server program
+
+--------------------------------------------------------------------------
+
+New functionalities in 2025.2 (2025.2/2863699) (2025/12/03)
+
+    #2842907 (Job #128788)
+        This release of P4Perl supports the 2025.2 P4 C/C++ API (2025.2/2852709)
+
+    #2839768 (Job #128767)
+        Added support for Rocky Linux 10.
 
 --------------------------------------------------------------------------
 
