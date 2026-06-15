@@ -1,7 +1,7 @@
                             Release Notes for
                          P4Perl, P4 API for Perl
 
-                             Version 2025.2
+                             Version 2026.1
 
 Introduction
 
@@ -18,6 +18,14 @@ Introduction
 	To determine the version of your P4Perl, issue the following
 	command:
 		perl -MP4 -e "print P4::Identify()"
+
+--------------------------------------------------------------------------
+
+Important End-of-Life Notice
+
+	This release of P4Perl is the last to support and test against Windows 10,
+	which is in EOL status. This is part of our commitment to focus on
+	supported technology platforms.
 
 --------------------------------------------------------------------------
 
@@ -153,12 +161,12 @@ Compatibility Statements
 
 	Server Compatibility
 
-	  This release of P4Perl supports the 2025.2 P4 Server.
+	  This release of P4Perl supports the 2026.1 P4 Server.
 	  Older releases might work but are not supported.
 
 	API Compatibility
 
-	  This release of P4Perl is built against the 2025.2 (2025.2/2852709)
+	  This release of P4Perl is built against the 2026.1 (2026.1/2951233)
 	  P4 C/C++ API. Older releases of the P4 C/C++ API may work but are no
 	  longer supported.
 
@@ -172,14 +180,10 @@ Compatibility Statements
 
 	OpenSSL Compatibility
 
-	  To build P4Perl with encrypted communication support, you must
-	  use the version of OpenSSL that P4 C/C++ API has been
-	  built against. Running P4Perl linked to an older library will
-	  fail with the error:
-
-	    "SSL library must be at least version 1.1.1"
-
-	  This release of P4Perl is supported with OpenSSL 1.1.1 and 3.0.8.
+	  To build P4Perl with encrypted communication support, you must use the
+	  version of OpenSSL that P4 C/C++ API has been built against.
+	  The 2026.1 server requires OpenSSL 3.x.x.
+	  It is recommended to use the latest available patch version.
 
 	Platform Compatibility
 
@@ -187,13 +191,13 @@ Compatibility Statements
 	  only on the following platforms:
 
 	    Linux kernel 2.6+ for Intel(x86_64)
-	        Ubuntu 20.04, 22.04, 24.04
-	        Rocky Linux 8, 9, 10
+	        Ubuntu 22.04, 24.04
+	        Rocky Linux 9, 10
 	    Linux kernel 2.6+ for ARM(aarch64)
-	        Ubuntu 20.04, 22.04, 24.04
+	        Ubuntu 22.04, 24.04
 	        Rocky Linux 9, 10
 	    Windows for Intel(ntx64)
-	        Server 2016, 2019, 2022
+	        Server 2016, 2019, 2022, 2025
 	        Windows 10, 11
 
 	Compiler Compatibility
@@ -225,81 +229,6 @@ Compatibility Statements
 	  P4Perl does not support the P4VFS sync functionality due to compiler
 	  inconsistencies with the P4 C/C++ API builds
 
-	Deleted Methods
-	---------------
-	The following methods have been deleted from the P4 class and
-	are no longer available.
-
-	Dropped()	Use IsConnected()
-	Final()		Use Disconnect()
-	Init()		Use Connect()
-	IsParseForms()	Form parsing is now always on
-	Login()		Use RunLogin()
-	MergeErrors()	Errors and warnings are now separate
-	ParseForms()	Form parsing is now always on
-	Tag()		Tagged mode is on by default [see Tagged()]
-
-	New Methods
-	-----------
-	The following methods are new to P4Perl.
-
-	GetApiLevel()		Returns the API compatibility level
-	P4ConfigFile()		Returns the path of the P4CONFIG file
-	IsConnected()		Returns true if the client is connected
-	Debug()			Sets the debug level
-	GetMaxResults()		Returns the current maxresults limit
-	GetMaxScanRows()	Returns the current maxscanrows limit
-	GetMaxLockTime()	Returns the current maxlocktime limit
-	SetMaxLockTime()	Sets the current maxlocktime limit
-	GetProg()		Returns the name of the program (if set)
-	ServerLevel()		Returns the (numeric) level of the server
-	GetTicketFile()		Returns the path to the current ticket file
-	SetTicketFile()		Sets the path to the current ticket file
-	GetVersion()		Returns the version of the script
-	SetVersion()		Sets the version of the script
-	ClearHandler()		Clears the active results handler
-	GetHandler()		Returns the results handler object
-	SetHandler()		Sets the results  handler object
-
-	Renamed Methods
-	---------------
-	In the Public Depot version of P4Perl, unknown methods are assumed
-	to be P4 command and are executed accordingly. For example,
-	you can issue a "p4 info" command as follows:
-
-		$p4->Info();
-
-	This approach causes problems with keywords like "client," which
-	is both a command and a setting in the client environment
-	(P4CLIENT). To resolve this ambiguity and to make P4Perl
-	consistent with other P4 scripting interfaces, this
-	convention has been changed. In P4Perl, methods with
-	names prefixed with "Run" are interpreted as P4 commands.
-	For example:
-
-		$p4->RunInfo();
-
-	Tagged Mode and Form Parsing
-	----------------------------
-	In the Public Depot version of P4Perl, tagged output and
-	form parsing mode are off by default but most scripts
-	turn them on immediately. In P4Perl, both form
-	parsing and tagged output are on by default.
-
-	Form parsing cannot be explicitly disabled, but tagged output may
-	be turned on and off by using the following calls:
-
-		$p4->Tagged( 0 );	# Disabled
-		$p4->Tagged( 1 );	# Enabled
-
-	Because form parsing does not work when tagged output is disabled,
-	this method can be used to disable form parsing.
-
-	Calling Tagged() without a parameter is no longer supported.
-	Most users can simply delete any old calls to Tagged()
-	from their scripts. Previously it was not possible to
-	disable tagged output after enabling it.
-
 --------------------------------------------------------------------------
 
 Key to symbols used in change notes below.
@@ -307,6 +236,16 @@ Key to symbols used in change notes below.
 	  * -- requires new P4Perl
 	 ** -- requires P4Perl built with new P4 C/C++ API
 	*** -- requires new p4d server program
+
+--------------------------------------------------------------------------
+
+New functionalities in 2026.1 (2026.1/2974615)(2026/06/11)
+
+    #2959073 (Job #133657) * ** ***
+        This release of P4Perl supports the 2026.1 P4 C/C++ API
+
+    (Job #129873)
+        Added support for Windows Server 2025
 
 --------------------------------------------------------------------------
 
